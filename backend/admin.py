@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from backend.forms import CustomUserCreationForm, CustomUserChangeForm
 
-from backend.models import Category, AdminUser, CustomerUser, Product
+from backend.models import Category, AdminUser, CustomerUser, Product, Cart
 
 from django.utils.html import format_html
 from django.db.models import Q
@@ -67,3 +67,7 @@ class ProductAdmin(admin.ModelAdmin):
         return format_html('<img src = "{}" width = "150" height="150" />'.format(obj.image_path.url))
 
     image_tag.short_description = 'Image'
+
+@admin.register(Cart)
+class CartAdmin(admin.ModelAdmin):
+    list_display = ('id', 'custom_user', 'product', 'qty',)
