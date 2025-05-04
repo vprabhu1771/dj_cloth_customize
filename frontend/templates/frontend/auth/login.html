@@ -1,0 +1,118 @@
+{% extends 'frontend/layout/app.html' %}
+
+{% block title %}
+Login - Fashion Hub
+{% endblock %}
+
+{% block content %}
+<style>
+    .auth-container {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1558769132-cb1aea458c5e');
+      background-size: cover;
+      background-position: center;
+      padding: 1rem;
+    }
+    .auth-box {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      width: 100%;
+      max-width: 400px;
+    }
+    .auth-header h1 {
+      margin: 0;
+      font-size: 1.8rem;
+      color: #ff4081;
+    }
+    .auth-header p {
+      font-size: 0.9rem;
+      color: #555;
+      margin-bottom: 1rem;
+    }
+    .form-group {
+      position: relative;
+      margin-bottom: 1rem;
+    }
+    .form-group i {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #888;
+    }
+    .auth-input {
+
+  width: 100%;
+  padding: 0.7rem 0.7rem 0.7rem 2.2rem; /* adjusted left-padding for icon */
+  font-size: 0.9rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box; /* <— THIS is important to stop overflow */
+}
+
+    .auth-button {
+      width: 100%;
+      padding: 0.7rem;
+      font-size: 1rem;
+      background: #111;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .auth-links {
+      text-align: center;
+      margin-top: 1rem;
+      font-size: 0.85rem;
+    }
+    .auth-links a {
+      color: #111;
+      text-decoration: underline;
+    }
+    .message {
+      text-align: center;
+      margin-top: 0.5rem;
+      font-size: 0.85rem;
+    }
+</style>
+
+<div class="auth-container">
+    <div class="auth-box">
+        <div class="auth-header">
+            <h1>Welcome Back</h1>
+            <p>Sign in to continue shopping</p>
+        </div>
+        {% if messages %}
+            {% for message in messages %}
+                <div>{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        <form class="auth-form" id="loginForm" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <i class="fas fa-envelope"></i>
+                <input type="email" class="auth-input" id="email" name="email" placeholder="Email address" required>
+            </div>
+            <div class="form-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" class="auth-input" id="password" name="password" placeholder="Password" required>
+            </div>
+            <!-- Email & Password Fields -->
+            <button type="submit" class="auth-button">Sign In</button>
+
+
+            <div class="auth-links">
+                Don't have an account? <a href="Register.Html">Sign up<br></a>
+
+            </div>
+            <div class="message" id="message"></div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
