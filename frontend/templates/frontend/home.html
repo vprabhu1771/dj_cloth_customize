@@ -2,13 +2,318 @@
 
 {% block title %}
 
-Home Page
+Fashion Hub - Custom Clothing & Designer Wear
 
 {% endblock %}
 
 
 {% block content %}
+<style>
 
-Home Page Content
+    /* Adjust hero section to account for fixed navbar */
+    .hero-section {
+        margin-top: 0px;
+        background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1441986300917-64674bd600d8');
+        background-size: cover;
+        background-position: center;
+        color: white;
+        padding: 150px 0;
+        text-align: center;
+        margin-bottom: 60px;
+    }
+
+    .hero-content {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .hero-content h1 {
+        font-size: 3.5rem;
+        margin-bottom: 20px;
+        font-weight: 700;
+    }
+
+    .hero-content p {
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+        line-height: 1.6;
+    }
+
+    .cta-buttons {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+    }
+
+    .cta-button {
+        padding: 15px 40px;
+        border-radius: 30px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .primary-cta {
+        background: var(--primary-color);
+        color: white;
+    }
+
+    .secondary-cta {
+        background: transparent;
+        color: white;
+        border: 2px solid white;
+    }
+
+    .features-section {
+        padding: 80px 0;
+        background: var(--light-gray);
+    }
+
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+        padding: 0 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .feature-card {
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .feature-icon {
+        font-size: 2.5rem;
+        color: var(--primary-color);
+        margin-bottom: 20px;
+    }
+
+    .collection-section {
+        padding: 80px 0;
+    }
+
+    .section-title {
+        text-align: center;
+        margin-bottom: 50px;
+        font-size: 2.5rem;
+        color: var(--text-color);
+    }
+
+    .collection-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        padding: 0 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .collection-card {
+        position: relative;
+        overflow: hidden;
+        border-radius: 10px;
+        height: 400px;
+    }
+
+    .collection-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .collection-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(transparent, rgba(0,0,0,0.8));
+        padding: 20px;
+        color: white;
+    }
+
+    .collection-card:hover .collection-image {
+        transform: scale(1.1);
+    }
+
+    .customization-section {
+        padding: 80px 0;
+        background: var(--light-gray);
+    }
+
+    .customization-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 50px;
+        align-items: center;
+        padding: 0 20px;
+    }
+
+    .customization-image {
+        width: 100%;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .customization-text h2 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        color: var(--text-color);
+    }
+
+    .customization-text p {
+        margin-bottom: 30px;
+        line-height: 1.6;
+        color: #666;
+    }
+
+    .steps-list {
+        list-style: none;
+        padding: 0;
+    }
+
+    .step-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .step-number {
+        width: 40px;
+        height: 40px;
+        background: var(--primary-color);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        margin-right: 15px;
+    }
+
+    @media (max-width: 768px) {
+        .hero-content h1 {
+            font-size: 2.5rem;
+        }
+
+        .customization-content {
+            grid-template-columns: 1fr;
+        }
+
+        .cta-buttons {
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+</style>
+<section class="hero-section" id="home">
+    <div class="hero-content">
+        <h1>Your Style, Your Way</h1>
+        <p>Discover our exclusive collection of designer wear or create your own custom designs. Experience fashion
+            that's uniquely you.</p>
+        <div class="cta-buttons">
+            <a href="products.html" class="cta-button primary-cta">Shop Collection</a>
+            <a href="MainCustomize.HTML" class="cta-button secondary-cta">Start Customizing</a>
+        </div>
+    </div>
+</section>
+
+<section class="features-section">
+    <div class="features-grid">
+        <div class="feature-card">
+            <i class="fas fa-tshirt feature-icon"></i>
+            <h3>Premium Fabrics</h3>
+            <p>Hand-picked materials ensuring comfort and durability</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-pencil-ruler feature-icon"></i>
+            <h3>Custom Designs</h3>
+            <p>Create your perfect outfit with our design tools</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-truck feature-icon"></i>
+            <h3>Fast Delivery</h3>
+            <p>Quick and reliable shipping across India</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-medal feature-icon"></i>
+            <h3>Quality Assured</h3>
+            <p>100% satisfaction guaranteed on all products</p>
+        </div>
+    </div>
+</section>
+
+<section class="collection-section">
+    <h2 class="section-title">Latest Collections</h2>
+    <div class="collection-grid">
+        <div class="collection-card">
+            <img src="https://images.unsplash.com/photo-1539008835657-9e8e9680c956" alt="Ethnic Wear"
+                 class="collection-image">
+            <div class="collection-overlay">
+                <h3>Ethnic Wear</h3>
+                <p>Traditional designs with modern touch</p>
+            </div>
+        </div>
+        <div class="collection-card">
+            <img src="https://images.unsplash.com/photo-1515372039744-b8f02a3ae446" alt="Western Wear"
+                 class="collection-image">
+            <div class="collection-overlay">
+                <h3>Western Wear</h3>
+                <p>Contemporary styles for modern you</p>
+            </div>
+        </div>
+        <div class="collection-card">
+            <img src="https://images.unsplash.com/photo-1534126511673-b6899657816a" alt="Designer Collection"
+                 class="collection-image">
+            <div class="collection-overlay">
+                <h3>Designer Collection</h3>
+                <p>Exclusive designer pieces</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="customization-section" id="customize">
+    <div class="customization-content">
+        <div class="customization-text">
+            <h2>Create Your Perfect Outfit</h2>
+            <p>Experience the future of fashion with our advanced customization tools. Design clothes that perfectly
+                match your style and personality.</p>
+            <ul class="steps-list">
+                <li class="step-item">
+                    <div class="step-number">1</div>
+                    <div>Choose your style and fabric</div>
+                </li>
+                <li class="step-item">
+                    <div class="step-number">2</div>
+                    <div>Customize colors and patterns</div>
+                </li>
+                <li class="step-item">
+                    <div class="step-number">3</div>
+                    <div>Add your measurements</div>
+                </li>
+                <li class="step-item">
+                    <div class="step-number">4</div>
+                    <div>Preview and order your design</div>
+                </li>
+            </ul>
+            <a href="DESIGN2.HTML" class="cta-button primary-cta">Start Designing</a>
+        </div>
+        <img src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2" alt="Customization"
+             class="customization-image">
+    </div>
+</section>
 
 {% endblock %}
