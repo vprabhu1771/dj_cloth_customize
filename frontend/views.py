@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 
@@ -25,6 +25,10 @@ def auth_login(request):
         else:
             messages.error(request, 'Invalid email or password')
     return render(request, 'frontend/auth/login.html')
+
+def auth_logout(request):
+    logout(request)  # Log out the user
+    return redirect('home')  # Redirect to the login page or home page
 
 def cart(request):
     context = {
