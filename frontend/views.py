@@ -129,7 +129,7 @@ def cart(request):
             'error_message': 'You need to log in to view your cart.'  # Optional error message
         }
 
-    return render(request, 'frontend/cart/index.html', data)
+    return render(request, 'frontend/cart.html', data)
 
 @login_required
 def add_to_cart(request, product_id):

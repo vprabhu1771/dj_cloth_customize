@@ -239,25 +239,26 @@ Cart Page
 }
 
 </style>
+
+
 <section class="cart-section">
     <div class="container">
-        {% if cart %}
+        {% if cart_items %}
             <h1 class="cart-title">Shopping Cart</h1>
             <div class="cart-container">
                 <div class="cart-items" id="cartItems">
-                    {% for item in cart %}
+                    {% for item in cart_items %}
                         <div class="cart-item">
                             <div class="item-info">
                                 <img src="{{ item.product.image_path.url }}" alt="{{ item.product.name }}" class="item-image">
                                 <div class="item-details">
                                     <h3>{{ item.product.name }}</h3>
                                     <p>₹{{ item.product.price }}</p>
-                                   <div class="quantity-control">
+                                    <div class="quantity-control">
                                         <button class="qty-btn" onclick="updateQty({{ item.id }}, 'decrease')">−</button>
                                         <span class="qty-value" id="qty-{{ item.id }}">{{ item.qty }}</span>
                                         <button class="qty-btn" onclick="updateQty({{ item.id }}, 'increase')">+</button>
                                     </div>
-
                                 </div>
                             </div>
                             <div class="item-remove">
@@ -270,7 +271,7 @@ Cart Page
                     <h2 class="summary-title">Order Summary</h2>
                     <div class="summary-item">
                         <span>Subtotal:</span>
-                        <span id="subtotal">₹0</span>
+                        <span id="subtotal">₹{{ grand_total }}</span>
                     </div>
                     <div class="summary-item">
                         <span>Shipping:</span>
@@ -278,7 +279,7 @@ Cart Page
                     </div>
                     <div class="summary-item total">
                         <span>Total:</span>
-                        <span id="total">₹0</span>
+                        <span id="total">₹{{ grand_total }}</span>
                     </div>
                     <button class="checkout-button" onclick="checkout()">Proceed to Checkout</button>
                 </div>
@@ -293,4 +294,68 @@ Cart Page
         {% endif %}
     </div>
 </section>
+
+<!-- JavaScript to handle cart actions -->
+<script>
+function updateQty(cartId, action) {
+    let url = '';
+
+    if (action === 'increase') {
+        url = `/cart/increase/${cartId}/`;
+    } else if (action === 'decrease') {
+        url = `/cart/decrease/${cartId}/`;
+    }
+
+    fetch(url, {
+        method: 'GET',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
+    .then(response => {
+        if (response.ok) {
+            location.reload(); // Refresh to update cart
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+function removeItem(cartId) {
+    const url = `/cart/remove/${cartId}/`;
+
+    fetch(url, {
+        method: 'GET',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
+    .then(response => {
+        if (response.ok) {
+            location.reload(); // Refresh to update cart
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+function clearCart() {
+    const url = `/cart/clear/`;
+
+    fetch(url, {
+        method: 'GET',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
+    .then(response => {
+        if (response.ok) {
+            location.reload(); // Refresh to clear cart
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+function checkout() {
+    alert("Proceeding to checkout... (you can implement redirection here)");
+}
+</script>
 {% endblock %}
