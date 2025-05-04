@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from backend.forms import CustomUserCreationForm, CustomUserChangeForm
 
-from backend.models import Category, AdminUser, CustomerUser, Product, Cart
+from backend.models import Category, AdminUser, CustomerUser, Product, Cart, SubCategory
 
 from django.utils.html import format_html
 from django.db.models import Q
@@ -57,6 +57,11 @@ class AdminUserAdmin(BaseCustomUserAdmin):
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     search_fields = ('name',)
+
+@admin.register(SubCategory)
+class SubCategoryAdmin(admin.ModelAdmin):
+    search_fields = ('category__name','name',)
+    list_display = ('category__name','name',)
 
 
 @admin.register(Product)
