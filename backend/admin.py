@@ -66,7 +66,7 @@ class SubCategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('name', 'category','price','image_tag',)
+    list_display = ('name', 'sub_category','price','image_tag',)
 
     def image_tag(self, obj):
         return format_html('<img src = "{}" width = "150" height="150" />'.format(obj.image_path.url))
