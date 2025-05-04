@@ -10,7 +10,33 @@ from backend.models import Cart, CustomerUser, Gender
 
 # Create your views here.
 def home(request):
-    return render(request, 'frontend/home.html')
+    # Get the current logged-in user
+    user = request.user
+
+    # Prepare the initial data dictionary
+    data = {}
+
+    # If the user is authenticated, retrieve cart information
+    if user.is_authenticated:
+        # Print user email for debugging (remove in production)
+        print(user.email)
+
+        # Filter cart items for the current user
+        cart_items = Cart.objects.filter(custom_user=user)
+
+        # Calculate the grand total for the cart
+        grand_total = Cart.grand_total(customer_id=user.id)
+
+        # Add cart data to the context
+        data['cart_items'] = cart_items  # Pass the filtered cart items to the template
+        data['grand_total'] = grand_total
+        data['cart_count'] = cart_items.count()
+    else:
+        # If the user is not authenticated, set default cart values
+        data['cart_items'] = []
+        data['grand_total'] = 0
+        data['cart_count'] = 0
+    return render(request, 'frontend/home.html', data)
 
 def auth_login(request):
     if request.method == 'POST':

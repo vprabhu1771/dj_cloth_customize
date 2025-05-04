@@ -107,9 +107,11 @@ class Cart(models.Model):
     def total_price(self):
         return self.qty * self.product.price if self.product else 0
 
-    def grand_total(self):
-        cart_items = Cart.objects.filter(custom_user=self.custom_user)
-        total = sum (element.total_price()for element in cart_items)
+    @classmethod
+    def grand_total(cls, customer_id):
+        cart_items = cls.objects.filter(custom_user_id=customer_id)
+        total = sum(item.total_price() for item in cart_items)
+        return total
 
     class Meta:
         db_table = 'cart'
