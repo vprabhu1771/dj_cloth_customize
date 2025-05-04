@@ -1,10 +1,11 @@
 {% extends 'frontend/layout/app.html' %}
 
 {% block title %}
-Login - Fashion Hub
+Register - Fashion Hub
 {% endblock %}
 
 {% block content %}
+
 <style>
     .auth-container {
       min-height: 100vh;
@@ -84,35 +85,50 @@ Login - Fashion Hub
 <div class="auth-container">
     <div class="auth-box">
         <div class="auth-header">
-            <h1>Welcome Back</h1>
-            <p>Sign in to continue shopping</p>
+            <h1>Create Account</h1>
+            <p>Join the hub of trends</p>
         </div>
         {% if messages %}
-            {% for message in messages %}
-                <div>{{ message }}</div>
-            {% endfor %}
+        {% for message in messages %}
+        <li style="color: {% if message.tags == 'error' %}red{% else %}green{% endif %};">
+            {{ message }}
+        </li>
+        {% endfor %}
+
         {% endif %}
-        <form class="auth-form" id="loginForm" method="post">
+
+        <form class="auth-form" id="registerForm" method="POST">
             {% csrf_token %}
             <div class="form-group">
                 <i class="fas fa-envelope"></i>
-                <input type="email" class="auth-input" id="email" name="email" placeholder="Email address" required>
+                <input type="email" class="auth-input" name="email" placeholder="Email address" required>
+            </div>
+            <div class="form-group">
+                <i class="fas fa-phone"></i>
+                <input type="text" class="auth-input" name="phone" placeholder="Phone number" required>
+            </div>
+            <div class="form-group">
+                <select name="gender" class="auth-input" required>
+                    <option value="M">Male</option>
+                    <option value="F">Female</option>
+                </select>
             </div>
             <div class="form-group">
                 <i class="fas fa-lock"></i>
-                <input type="password" class="auth-input" id="password" name="password" placeholder="Password" required>
+                <input type="password" class="auth-input" name="password" placeholder="Password" required>
             </div>
-            <!-- Email & Password Fields -->
-            <button type="submit" class="auth-button">Sign In</button>
-
+            <div class="form-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" class="auth-input" name="confirmPassword" placeholder="Confirm Password"
+                       required>
+            </div>
+            <button type="submit" class="auth-button">Sign Up</button>
 
             <div class="auth-links">
-                Don't have an account? <a href="/register">Sign up<br></a>
-
+                Already have an account? <a href="/login">Sign In</a>
             </div>
-            <div class="message" id="message"></div>
         </form>
+
     </div>
 </div>
-
 {% endblock %}
