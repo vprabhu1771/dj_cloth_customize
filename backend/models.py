@@ -96,7 +96,7 @@ class Product(models.Model):
 
     name = models.CharField(max_length=255)
 
-    category=models.ForeignKey(Category,null=True,blank=True,on_delete=models.SET_NULL)
+    sub_category=models.ForeignKey(SubCategory,null=True,blank=True,on_delete=models.SET_NULL, related_name='products')
 
     price=models.DecimalField(max_digits=10,decimal_places=2,null=True,blank=True)
 
