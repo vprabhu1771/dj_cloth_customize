@@ -44,9 +44,10 @@ class CustomUser(AbstractUser):
     email = models.EmailField(_('email address'), unique=True)
     gender = models.CharField(max_length=1, choices=Gender.choices, default=Gender.MALE)
     image = GenderedImageField(upload_to='profile/', blank=True)
+    phone = models.CharField(max_length=10, unique=True, blank=True)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['gender']
+    REQUIRED_FIELDS = ['gender', 'phone',]
     objects = CustomUserManager()
 
     def __str__(self):
