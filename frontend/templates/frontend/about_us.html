@@ -1,0 +1,105 @@
+{% extends 'frontend/layout/app.html' %}
+
+{% block title %}
+Fashion Hub - Custom Sarees, Frocks, T-Shirts & Bangles
+{% endblock %}
+
+{% block content %}
+<style>
+    .about-container {
+        max-width: 1000px;
+        margin: auto;
+        padding: 40px 20px;
+        background: #fff;
+    }
+
+    header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    header h1 {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+    }
+
+    .intro, .team, .values {
+        margin-bottom: 40px;
+    }
+
+    .team-members {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+    }
+
+    .member {
+        background: #f9f9f9;
+        padding: 20px;
+        border-radius: 12px;
+        width: 200px;
+        text-align: center;
+        box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+
+    .member img {
+        border-radius: 50%;
+        margin-bottom: 10px;
+    }
+
+    .values ul {
+        list-style-type: disc;
+        padding-left: 20px;
+    }
+</style>
+
+<div class="about-container">
+    <header>
+        <h1>About Fashion Hub</h1>
+        <p>Custom Designs. Handcrafted Elegance. Personalized Fashion.</p>
+    </header>
+
+    <section class="intro">
+        <h2>Our Mission</h2>
+        <p>At Fashion Hub, we specialize in crafting customizable sarees, frocks, t-shirts, and traditional bangles that celebrate individuality and cultural elegance. Our mission is to bring your fashion dreams to life with premium fabrics, unique designs, and personalized service.</p>
+    </section>
+
+    <section class="team">
+        <h2>Meet Our Creative Team</h2>
+        <div class="team-members">
+            <div class="member">
+                <img src="https://via.placeholder.com/120" alt="Designer">
+                <h3>Priya Sharma</h3>
+                <p>Lead Saree Designer</p>
+            </div>
+            <div class="member">
+                <img src="https://via.placeholder.com/120" alt="Frock Specialist">
+                <h3>Anjali Verma</h3>
+                <p>Frock & Kidswear Specialist</p>
+            </div>
+            <div class="member">
+                <img src="https://via.placeholder.com/120" alt="T-shirt Expert">
+                <h3>Ravi Kumar</h3>
+                <p>T-Shirt & Print Expert</p>
+            </div>
+            <div class="member">
+                <img src="https://via.placeholder.com/120" alt="Bangle Designer">
+                <h3>Meena Patel</h3>
+                <p>Traditional Bangle Designer</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="values">
+        <h2>Why Choose Us?</h2>
+        <ul>
+            <li>Handcrafted, made-to-order sarees and frocks</li>
+            <li>Trendy and customized t-shirt printing</li>
+            <li>Beautiful, ethnic bangles designed for every occasion</li>
+            <li>Affordable pricing with premium quality</li>
+            <li>Dedicated support for personalized orders</li>
+        </ul>
+    </section>
+</div>
+{% endblock %}

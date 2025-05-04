@@ -6,8 +6,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 
 from django.contrib.auth.hashers import make_password
 
-from backend.models import Cart, CustomerUser, Gender, Category, Product, SubCategory
-
+from backend.models import Cart, CustomerUser, Gender, Category, Product, SubCategory, Order, OrderItem
 
 # Create your views here.
 from django.shortcuts import render, get_object_or_404
@@ -204,3 +203,92 @@ def clear_cart(request):
         messages.error(request, 'No items found in the cart.')
 
     return redirect('cart')  # Adjust as necessary
+
+@login_required
+def proceed_to_checkout(request):
+    user = request.user
+
+    # Filter cart items for the current user
+    cart_items = Cart.objects.filter(custom_user=user)
+
+    # Calculate subtotal
+    subtotal = sum(item.product.price * item.qty for item in cart_items)
+
+    # Define a fixed shipping charge (you can also calculate dynamically)
+    shipping = 50 if cart_items else 0  # ₹50 shipping if there are items
+
+    # Calculate total
+    total = subtotal + shipping
+
+    # Prepare data to send to the template
+    data = {
+        'cart_items': cart_items,
+        'subtotal': subtotal,
+        'shipping': shipping,
+        'total': total,
+        'page_title': 'Cart',
+        'cart_count': cart_items.count(),
+    }
+
+    return render(request, 'frontend/order.html', data)
+
+@login_required
+def place_order(request):
+    user = request.user
+    cart_items = Cart.objects.filter(custom_user=user)
+
+    if not cart_items.exists():
+        messages.warning(request, "Your cart is empty.")
+        return redirect('cart')
+
+    # Calculate total amount
+    total_amount = sum(item.product.price * item.qty for item in cart_items)
+
+    # Create the order
+    order = Order.objects.create(
+        customer=user,
+        total_amount=total_amount,
+        payment_method=request.POST.get('payment_method', 'UPI'),  # Default to 'CASH' if not provided
+        order_status='PENDING'
+    )
+
+    # Create order items
+    for item in cart_items:
+        OrderItem.objects.create(
+            order=order,
+            product=item.product,
+            qty=item.qty,
+            unit_price=item.product.price,
+            amount=item.product.price * item.qty,
+            discount=0  # Adjust if you have discount logic
+        )
+
+    # Clear the cart
+    cart_items.delete()
+
+    # Send confirmation email
+    subject = f"Order Confirmation - {order.order_number}"
+    message = (
+        f"Dear {user.first_name},\n\n"
+        f"Thank you for your order #{order.order_number}.\n"
+        f"Total Amount: ₹{order.total_amount}\n\n"
+        f"We will notify you once your order is shipped.\n\n"
+        f"Best regards,\n"
+        f"Your Company Name"
+    )
+    # send_mail(
+    #     subject,
+    #     message,
+    #     settings.DEFAULT_FROM_EMAIL,
+    #     [user.email],
+    #     fail_silently=False,
+    # )
+
+    messages.success(request, f"Order #{order.order_number} placed successfully!")
+    # return redirect('home')  # Redirect to a success page or order summary
+
+    # Return success response
+    return JsonResponse({'success': True})
+
+def about_us(request):
+    return render(request, "frontend/about_us.html")
