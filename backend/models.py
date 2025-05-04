@@ -77,6 +77,20 @@ class Category(models.Model):
     class Meta:
         db_table = "category"
 
+class SubCategory(models.Model):
+    id = models.BigAutoField(primary_key=True)
+
+    category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.SET_NULL)
+
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        db_table = "sub_category"
+
+
 class Product(models.Model):
     id = models.BigAutoField(primary_key=True)
 
