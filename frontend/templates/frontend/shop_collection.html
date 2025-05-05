@@ -1,0 +1,49 @@
+{% extends 'frontend/layout/app.html' %}
+
+{% block title %}
+    {{ page_title }} - Fashion Hub
+{% endblock %}
+
+{% block content %}
+<section class="products filtered-products">
+    <div class="container">
+        <h2>{{ page_title }}</h2>
+
+        {% if sub_categories %}
+            {% for sub_category in sub_categories %}
+                <div class="sub-category-block">
+                    <h1>{{ sub_category.category.name }}</h1>
+                    <h3>{{ sub_category.name }}</h3>
+
+                    {% if sub_category.products.all %}
+                        <div class="product-grid">
+                            {% for product in sub_category.products.all %}
+                                <div class="product-card">
+                                    <div class="product-image">
+                                        <img src="{{ product.image_path.url }}" alt="{{ product.name }}">
+                                        <div class="product-overlay">
+                                            <button class="quick-view">Quick View</button>
+                                        </div>
+                                    </div>
+                                    <div class="product-info">
+                                        <h4>{{ product.name }}</h4>
+                                        <p class="price">₹{{ product.price }}</p>
+                                        <form method="post" action="{% url 'add_to_cart' product.id %}">
+                                            {% csrf_token %}
+                                            <button class="add-to-cart" type="submit">Add to Cart</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p>No products found under {{ sub_category.name }}.</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No sub-categories found for {{ page_title }} category.</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

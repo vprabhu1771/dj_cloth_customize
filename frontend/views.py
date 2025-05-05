@@ -48,6 +48,14 @@ def home(request):
     data['category_present'] = False
     return render(request, 'frontend/home.html', data)
 
+def shop_collection(request):
+    sub_categories = SubCategory.objects.prefetch_related('products').all()
+    data = {
+        "page_title" : "Shop Collection",
+        "sub_categories" : sub_categories
+    }
+    return render(request, "frontend/shop_collection.html", data)
+
 def auth_login(request):
     if request.method == 'POST':
         email = request.POST.get('email')
