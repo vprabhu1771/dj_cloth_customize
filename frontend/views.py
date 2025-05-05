@@ -56,6 +56,14 @@ def shop_collection(request):
     }
     return render(request, "frontend/shop_collection.html", data)
 
+def main_customize(request):
+    sub_categories = SubCategory.objects.prefetch_related('products').all()
+    data = {
+        "page_title" : "Shop Collection",
+        "sub_categories" : sub_categories
+    }
+    return render(request, "frontend/main_customize.html", data)
+
 def auth_login(request):
     if request.method == 'POST':
         email = request.POST.get('email')

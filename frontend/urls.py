@@ -1,11 +1,13 @@
 from django.urls import path
 
-from frontend.views import home, shop_collection, auth_login, auth_logout, register, cart, add_to_cart, increase_quantity, \
-    decrease_quantity, remove_from_cart, clear_cart, place_order, proceed_to_checkout, about_us
+from frontend.views import home, shop_collection, auth_login, auth_logout, register, cart, add_to_cart, \
+    increase_quantity, \
+    decrease_quantity, remove_from_cart, clear_cart, place_order, proceed_to_checkout, about_us, main_customize
 
 urlpatterns = [
     path('', home, name="home"),
     path('shop_collection', shop_collection, name="shop_collection"),
+    path('main_customize', main_customize, name="main_customize"),
     path('login', auth_login, name='login'),
     path('logout/', auth_logout, name='logout'),
     path('register', register, name='register'),
