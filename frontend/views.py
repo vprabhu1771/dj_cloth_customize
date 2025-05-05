@@ -64,6 +64,14 @@ def main_customize(request):
     }
     return render(request, "frontend/main_customize.html", data)
 
+def men_customize(request):
+    product_id = request.GET.get('product')
+    product = get_object_or_404(Product, id=product_id)
+    data = {
+        "product": product
+    }
+    return render(request, "frontend/men_customize.html", data)
+
 def auth_login(request):
     if request.method == 'POST':
         email = request.POST.get('email')

@@ -1,0 +1,342 @@
+{% extends 'frontend/layout/app.html' %}
+{% load static %}
+
+{% block title %}
+
+Fashion Hub - Custom Clothing & Designer Wear
+
+{% endblock %}
+
+
+{% block content %}
+
+<style>
+    #canvas-container {
+           width: 450px;
+           height: 550px;
+           margin: auto;
+           border: 2px solid #ccc;
+           background: white;
+           position: relative;
+       }
+       .controls {
+           margin: 10px 0;
+       }
+       .controls button, .controls select, .controls input {
+           padding: 10px;
+           margin: 5px;
+           cursor: pointer;
+       }
+       .image-selection img {
+           width: 80px;
+           height: 80px;
+           cursor: pointer;
+           margin: 5px;
+           border-radius: 10px;
+           transition: transform 0.2s;
+       }
+       .image-selection img:hover {
+           transform: scale(1.1);
+       }
+</style>
+
+<h1>T-Shirt Customizer</h1>
+
+<div class="controls">
+    <select id="fontPicker"></select>
+    <button onclick="addCustomText()">Add Text</button>
+    <input type="text" id="customTextInput" placeholder="Enter your text here">
+
+</div>
+
+<div class="image-selection">
+    <img src="{% static 'images/1.jpg.jpeg' %}" onclick="addImageToCanvas(this.src)">
+    <img src="{% static 'images/2.jpg.jpeg' %}" onclick="addImageToCanvas(this.src)">
+    <img src="{% static 'images/3.jpg.jpeg' %}" onclick="addImageToCanvas(this.src)">
+    <img src="{% static 'images/4.jpg.jpeg' %}" onclick="addImageToCanvas(this.src)">
+    <img src="{% static 'images/5.jpg.jpeg' %}" onclick="addImageToCanvas(this.src)">
+    <img src="{% static 'images/BOYS.jpg.jpeg' %}" onclick="addImageToCanvas(this.src)">
+    <img src="{% static 'images/download (1).jpeg' %}" onclick="addImageToCanvas(this.src)">
+    <img src="{% static 'images/GOW.jpg.jpeg' %}" onclick="addImageToCanvas(this.src)">
+    <img src="{% static 'images/Kungfu.jpg.jpeg' %}" onclick="addImageToCanvas(this.src)">
+    <img src="{% static 'images/Logo.jpg.jpeg' %}" onclick="addImageToCanvas(this.src)">
+    <img src="{% static 'images/HOME.jpg.jpeg' %}" onclick="addImageToCanvas(this.src)">
+    <img src="{% static 'images/Logan.jpg.jpeg' %}" onclick="addImageToCanvas(this.src)">
+</div>
+
+<div id="canvas-container">
+    <canvas id="shirtCanvas"></canvas>
+</div>
+
+
+<script>
+    const canvas = new fabric.Canvas('shirtCanvas');
+    canvas.setWidth(450);
+    canvas.setHeight(550);
+
+    // Load T-shirt Background
+    fabric.Image.fromURL("{{ product.image_path.url }}", function(img) {
+        img.scaleToWidth(canvas.width);
+        img.scaleToHeight(canvas.height);
+        img.set({ selectable: false, evented: false });
+        canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
+            scaleX: canvas.width / img.width,
+            scaleY: canvas.height / img.height,
+            crossOrigin: 'anonymous'
+        });
+    });
+
+
+
+
+
+
+
+    const gradients = [
+        ["#3F5EFB", "#FC466B"],
+        ["#22C1C3", "#FDBB2D"],
+        ["#833AB4", "#FD1D1D", "#FCB045"],
+        ["#00c6ff", "#0072ff"],
+        ["#fc4a1a", "#f7b733"],
+        ["#00b09b", "#96c93d"],
+        ["#ff9966", "#ff5e62"],
+        ["#f953c6", "#b91d73"],
+        ["#00d2ff", "#3a7bd5"],
+        ["#c6ffdd", "#fbd786", "#f7797d"],
+        ["#ff9a9e", "#fad0c4"],
+        ["#a1c4fd", "#c2e9fb"],
+        ["#d299c2", "#fef9d7"],
+        ["#e0c3fc", "#8ec5fc"],
+        ["#fddb92", "#d1fdff"],
+        ["#4facfe", "#00f2fe"],
+        ["#43e97b", "#38f9d7"],
+        ["#fa709a", "#fee140"],
+        ["#30cfd0", "#330867"],
+        ["#e96443", "#904e95"],
+        ["#f12711", "#f5af19"],
+        ["#7f00ff", "#e100ff"],
+        ["#6a11cb", "#2575fc"],
+        ["#ff6a00", "#ee0979"],
+        ["#1e3c72", "#2a5298"],
+        ["#ff4e50", "#f9d423"],
+        ["#ed4264", "#ffedbc"],
+        ["#56ab2f", "#a8e063"],
+        ["#000428", "#004e92"],
+        ["#1f4037", "#99f2c8"],
+        ["#fe8c00", "#f83600"],
+        ["#485563", "#29323c"],
+        ["#cb2d3e", "#ef473a"],
+        ["#b92b27", "#1565C0"],
+        ["#c31432", "#240b36"],
+        ["#457fca", "#5691c8"],
+        ["#00c3ff", "#ffff1c"],
+        ["#ee9ca7", "#ffdde1"],
+        ["#2193b0", "#6dd5ed"],
+        ["#de6161", "#2657eb"],
+        ["#ec008c", "#fc6767"],
+        ["#da4453", "#89216b"],
+        ["#00bf8f", "#001510"],
+        ["#23074d", "#cc5333"],
+        ["#373B44", "#4286f4"],
+        ["#3a1c71", "#d76d77", "#ffaf7b"],
+        ["#fdfc47", "#24fe41"],
+        ["#654ea3", "#eaafc8"],
+        ["#c33764", "#1d2671"],
+        ["#2C3E50", "#FD746C"],
+        ["#FFB75E", "#ED8F03"],
+        ["#614385", "#516395"],
+        ["#eacda3", "#d6ae7b"],
+        ["#ffecd2", "#fcb69f"],
+        ["#9796f0", "#fbc7d4"],
+        ["#F3904F", "#3B4371"],
+        ["#ff6e7f", "#bfe9ff"],
+        ["#00c6fb", "#005bea"],
+        ["#74ebd5", "#ACB6E5"],
+        ["#89f7fe", "#66a6ff"],
+        ["#f77062", "#fe5196"],
+        ["#00F260", "#0575E6"],
+        ["#4AC29A", "#BDFFF3"],
+        ["#e53935", "#e35d5b"],
+        ["#f7971e", "#ffd200"],
+        ["#000000", "#434343"],
+        ["#d38312", "#a83279"],
+        ["#232526", "#414345"],
+        ["#4b6cb7", "#182848"],
+        ["#8360c3", "#2ebf91"],
+        ["#1D4350", "#A43931"],
+        ["#FDC830", "#F37335"],
+        ["#5C258D", "#4389A2"],
+        ["#AA076B", "#61045F"],
+        ["#ee0979", "#ff6a00"],
+        ["#141E30", "#243B55"],
+        ["#D38312", "#A83279"],
+        ["#FF512F", "#F09819"],
+        ["#F00000", "#DC281E"],
+        ["#833ab4", "#fd1d1d", "#fcb045"],
+        ["#00f2fe", "#4facfe"],
+        ["#ff9a9e", "#fecfef"],
+        ["#fddb92", "#d1fdff"],
+        ["#2c3e50", "#3498db"],
+        ["#1c92d2", "#f2fcfe"],
+        ["#485563", "#29323c"],
+        ["#e1eec3", "#f05053"],
+        ["#43cea2", "#185a9d"],
+        ["#ffafbd", "#ffc3a0"],
+        ["#c2e9fb", "#a1c4fd"],
+        ["#e0c3fc", "#8ec5fc"],
+        ["#fddb92", "#d1fdff"],
+        ["#7f00ff", "#e100ff"]
+    ];
+
+    const gradientPicker = document.createElement('select');
+    gradientPicker.id = "gradientPicker";
+    gradientPicker.style.padding = "10px";
+    gradientPicker.style.margin = "5px";
+
+    gradients.forEach((gradient, i) => {
+        const option = document.createElement('option');
+        option.value = i;
+        option.innerText = `Gradient ${i + 1} (${gradient.join(', ')})`;
+        gradientPicker.appendChild(option);
+    });
+
+    document.querySelector(".controls").appendChild(gradientPicker);
+
+    function addCustomText() {
+        const fontFamily = document.getElementById('fontPicker').value;
+        const selectedGradient = gradients[document.getElementById("gradientPicker").value];
+
+        const text = new fabric.Text("Text", {
+            left: 100,
+            top: 200,
+            fontSize: 30,
+            fontFamily: fontFamily,
+            stroke: "#000",
+            strokeWidth: 0.5
+        });
+
+        // Apply gradient fill
+        text.set("fill", new fabric.Gradient({
+            type: 'linear',
+            gradientUnits: 'percentage',
+            coords: { x1: 0, y1: 0, x2: 1, y2: 0 },
+            colorStops: selectedGradient.map((color, index) => ({
+                offset: index / (selectedGradient.length - 1),
+                color: color
+            }))
+        }));
+
+        canvas.add(text);
+    }
+
+
+    const googleFonts = [
+  "Orbitron", "Rubik Glitch", "Permanent Marker", "Bangers", "Monoton", "Raleway", "Anton", "Oswald", "Roboto", "Lobster",
+  "Pacifico", "Dancing Script", "Caveat", "Cinzel", "Zilla Slab", "Baloo 2", "Fredoka", "Shadows Into Light", "Playfair Display",
+  "Great Vibes", "Courgette", "Satisfy", "Kaushan Script", "Indie Flower", "Gloria Hallelujah", "Amatic SC", "Chewy", "Handlee",
+  "Marck Script", "Rock Salt", "Zeyada", "Architects Daughter", "Bebas Neue", "Fira Sans", "Inconsolata", "Merriweather", "Noto Serif",
+  "Open Sans", "PT Sans", "Quicksand", "Righteous", "Sacramento", "Source Sans Pro", "Teko", "Ubuntu", "Varela Round", "Work Sans",
+  "Yatra One", "Abel", "Abril Fatface", "Alegreya", "Alfa Slab One", "Arapey", "Arimo", "Armata", "Archivo Black", "Arvo",
+  "Asap", "Assistant", "Barlow", "Baskervville", "BioRhyme", "Bitter", "Cabin", "Carter One", "Catamaran", "Chakra Petch",
+  "Chivo", "Comfortaa", "Cormorant", "Crete Round", "DM Sans", "Domine", "EB Garamond", "Encode Sans", "Exo", "Fira Code",
+  "Francois One", "Hind", "IBM Plex Mono", "IBM Plex Sans", "Josefin Sans", "Kalam", "Kanit", "Karla", "Lato", "Libre Baskerville",
+  "Libre Franklin", "Lora", "M PLUS Rounded 1c", "Manrope", "Maven Pro", "Merriweather Sans", "Metrophobic", "Mulish", "Mukta",
+  "Nanum Gothic", "Neuton", "News Cycle", "Noto Sans", "Nunito", "Oxygen", "Padauk", "Palanquin", "Pangolin", "Pathway Extreme",
+  "Play", "Poppins", "Prata", "Prompt", "Proza Libre", "Public Sans", "Questrial", "Quintessential", "Rajdhani", "Raleway Dots",
+  "Readex Pro", "Red Hat Display", "Red Hat Text", "Rokkitt", "Rosario", "Rubik", "Rufina", "Ruluko", "Sarabun", "Sawarabi Gothic",
+  "Secular One", "Signika", "Slabo 27px", "Sora", "Space Grotesk", "Space Mono", "Spartan", "Spectral", "Syne", "Tajawal",
+  "Texturina", "Tinos", "Titillium Web", "Tomorrow", "Trirong", "Trocchi", "Tuffy", "Tunis", "Turret Road", "Unica One",
+  "Unna", "Urbanist", "Varela", "Vesper Libre", "Vidaloka", "Viga", "Vollkorn", "Wendy One", "ZCOOL QingKe HuangYou",
+  "Zilla Slab Highlight", "Yellowtail", "Yeseva One", "Yomogi", "Yrsa", "ZCOOL XiaoWei", "ZCOOL KuaiLe", "Zen Tokyo Zoo",
+  "Zen Antique", "Zen Loop", "Zeyada", "Yatra One", "Yuji Boku", "Yuji Hentaigana Akari", "Yuji Mai", "Zen Dots", "Zen Maru Gothic",
+  "Zen Old Mincho", "Zhi Mang Xing", "Zilla Slab", "Yaldevi", "Viga", "Vibur", "Trispace", "Telex", "Syncopate", "Stylish",
+  "Stint Ultra Condensed", "Stint Ultra Expanded", "Stoke", "Stardos Stencil", "Special Elite", "Sree Krushnadevaraya", "Spicy Rice",
+  "Slabo 13px", "Simonetta", "Siemreap", "Share Tech Mono", "Share", "Seymour One", "Sen", "Sedgwick Ave", "Sarina", "Sansita",
+  "Sancreek", "Saira", "Saira Semi Condensed", "Saira Extra Condensed", "Saira Condensed", "Rye", "Rufina", "Rozha One", "Rochester",
+  "Righteous", "Ribeye", "Rationale", "Raleway", "Quintessential", "Quantico", "Quando", "Quattrocento Sans", "Quattrocento",
+  "Questrial", "Quantico"
+];
+
+const fontPicker = document.getElementById("fontPicker");
+const textInput = document.getElementById("textInput");
+const preview = document.getElementById("preview");
+
+googleFonts.forEach(font => {
+  const option = document.createElement("option");
+  option.value = font;
+  option.innerText = font;
+  option.style.fontFamily = font;
+  fontPicker.appendChild(option);
+});
+
+function loadFont(fontFamily, callback) {
+  WebFont.load({
+    google: { families: [fontFamily] },
+    active: callback
+  });
+}
+
+fontPicker.addEventListener("change", () => {
+  const font = fontPicker.value;
+  loadFont(font, () => {
+    preview.style.fontFamily = font;
+  });
+});
+
+textInput.addEventListener("input", () => {
+  preview.innerText = textInput.value || "Hello Gradient World!";
+});
+
+// Initial font load
+loadFont(fontPicker.value || googleFonts[0], () => {
+  preview.style.fontFamily = fontPicker.value || googleFonts[0];
+});
+    function addImageToCanvas(imageSrc) {
+        fabric.Image.fromURL(imageSrc, function(img) {
+            img.scaleToWidth(100);
+            img.scaleToHeight(100);
+            img.left = 150;
+            img.top = 250;
+            img.set({
+                cornerSize: 8,
+                borderColor: 'black',
+                cornerColor: 'red',
+                transparentCorners: false
+            });
+            canvas.add(img);
+        });
+    }
+    function addCustomText() {
+const inputText = document.getElementById('customTextInput').value.trim();
+if (!inputText) {
+    alert("Please enter some text.");
+    return;
+}
+
+const fontFamily = document.getElementById('fontPicker').value;
+const selectedGradient = gradients[document.getElementById("gradientPicker").value];
+
+const text = new fabric.Text(inputText, {
+    left: 100,
+    top: 200,
+    fontSize: 30,
+    fontFamily: fontFamily,
+    stroke: "#000",
+    strokeWidth: 0.5
+});
+
+text.set("fill", new fabric.Gradient({
+    type: 'linear',
+    gradientUnits: 'percentage',
+    coords: { x1: 0, y1: 0, x2: 1, y2: 0 },
+    colorStops: selectedGradient.map((color, index) => ({
+        offset: index / (selectedGradient.length - 1),
+        color: color
+    }))
+}));
+
+canvas.add(text);
+}
+
+</script>
+{% endblock %}
