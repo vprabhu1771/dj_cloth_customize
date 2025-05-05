@@ -1,0 +1,102 @@
+[
+  {
+    "model": "backend.product",
+    "pk": 1,
+    "fields": {
+      "name": "Classic Black T-Shirt",
+      "sub_category": 1,
+      "price": "599.00",
+      "image_path": "product/Tshirt.jpg.jpeg"
+    }
+  },
+  {
+    "model": "backend.product",
+    "pk": 2,
+    "fields": {
+      "name": "Premium Polo T-Shirt",
+      "sub_category": 1,
+      "price": "799.00",
+      "image_path": "product/Tshirt2.jpg.jpeg"
+    }
+  },
+  {
+    "model": "backend.product",
+    "pk": 3,
+    "fields": {
+      "name": "Traditional Silk Saree",
+      "sub_category": 2,
+      "price": "3999.00",
+      "image_path": "product/saree1.jpg"
+    }
+  },
+  {
+    "model": "backend.product",
+    "pk": 4,
+    "fields": {
+      "name": "Designer Cotton Saree",
+      "sub_category": 2,
+      "price": "2499.00",
+      "image_path": "product/saree2.jpg"
+    }
+  },
+  {
+    "model": "backend.product",
+    "pk": 5,
+    "fields": {
+      "name": "Calssic Purple  Chudi Set",
+      "sub_category": 3,
+      "price": "1999.00",
+      "image_path": "product/CHUDI_3.jpeg"
+    }
+  },
+  {
+    "model": "backend.product",
+    "pk": 6,
+    "fields": {
+      "name": "Classic Black  Chudi Set",
+      "sub_category": 3,
+      "price": "1499.00",
+      "image_path": "product/CHUDI_4.jpeg"
+    }
+  },
+  {
+    "model": "backend.product",
+    "pk": 7,
+    "fields": {
+      "name": "Party Wear Frock",
+      "sub_category": 4,
+      "price": "2299.00",
+      "image_path": "product/Frock1.jpg.jpeg"
+    }
+  },
+  {
+    "model": "backend.product",
+    "pk": 8,
+    "fields": {
+      "name": "Casual Summer Frock",
+      "sub_category": 4,
+      "price": "1299.00",
+      "image_path": "product/Frock2.jpg.jpeg"
+    }
+  },
+  {
+    "model": "backend.product",
+    "pk": 9,
+    "fields": {
+      "name": "Casual Bangles",
+      "sub_category": 5,
+      "price": "299.00",
+      "image_path": "product/Bangle1.jpg.jpeg"
+    }
+  },
+  {
+    "model": "backend.product",
+    "pk": 10,
+    "fields": {
+      "name": "Mirror Bangles",
+      "sub_category": 5,
+      "price": "199.00",
+      "image_path": "product/Bangle.jpg.jpeg"
+    }
+  }
+]
