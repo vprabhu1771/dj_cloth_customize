@@ -83,11 +83,13 @@ class OrderItemInline(admin.TabularInline):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('id', 'customer', 'order_date', 'total_amount', 'order_status', 'payment_method', 'order_number')
+    list_display = ('id', 'customer', 'customer__phone', 'order_date', 'total_amount', 'order_status', 'payment_method', 'order_number')
     list_filter = ('order_status', 'payment_method', 'order_date')
     search_fields = ('order_number', 'customer__username')  # Assuming CustomUser has a username field
     readonly_fields = ('order_number', 'order_date')  # Fields that should be read-only
     inlines = [OrderItemInline]  # Display OrderItem as inline within Order admin
+
+    list_display_links = ('id', 'customer', 'customer__phone')
 
     def get_readonly_fields(self, request, obj=None):
         # Additional logic to determine read-only fields
